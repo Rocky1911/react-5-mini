@@ -13,7 +13,10 @@ export default function counter(state = initialState, action) {
   switch (action.type) {
     case INCREMENT:
       return {
-        counterValue: state.counterValue + action.amount,
+        ...state,
+        currentValue: state.currentValue + action.payload,
+        // above we use state.currentValue NOT initialState.currentValue because initialState would work only once
+        // counterValue: state.counterValue + action.amount,
         futureValues: [],
         previousValues: [state.counterValue, ...state.previousValues]
       };
@@ -41,11 +44,17 @@ export default function counter(state = initialState, action) {
   }
 }
 export function increment(amount) {
-  return { amount, type: INCREMENT };
+  return {
+    type: INCREMENT,
+    payload: amount
+  };
 }
 
 export function decrement(amount) {
-  return { amount, type: DECREMENT };
+  return {
+    type: DECREMENT,
+    payload: amount
+  };
 }
 export function undo() {
   return { type: UNDO };

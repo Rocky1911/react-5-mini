@@ -4,7 +4,9 @@ import { connect } from "react-redux";
 import { increment, decrement, undo, redo } from "./ducks/counter";
 class App extends Component {
   render() {
+    console.log(this.props);
     const {
+      futureValues,
       currentValues,
       previousValues,
       decrement,
@@ -15,11 +17,11 @@ class App extends Component {
     return (
       <div className="app">
         <section className="counter">
-          <h1 className="counter__current-value">{0}</h1>
+          <h1 className="counter__current-value">{currentValues}</h1>
           <div className="counter__button-wrapper">
             <button
               className="counter__button increment-one"
-              onClick={() => increment(1)}
+              onClick={() => this.props.increment(1)}
             >
               +1
             </button>
@@ -51,7 +53,7 @@ class App extends Component {
             </button>
             <button
               className="counter__button redo"
-              disabled={previousValues.length === 0}
+              disabled={futureValues.length === 0}
               onClick={redo}
             >
               Redo
